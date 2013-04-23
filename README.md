@@ -1,4 +1,4 @@
-HIKI
+HIKI - (hikikomori)
 ====
 
 we can make games here :)
@@ -9,6 +9,8 @@ We can think of a super cool idea to do and make and we can do it and make it an
 
 ===
 
+##HUH
+
 Goal: To make a cool game over the summer
-Language: Lua + LOVE (v0.80) -> https://love2d.org/
+Language: Lua + löve (v0.80) -> [löve](http://love2d.org)
 
