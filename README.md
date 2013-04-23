@@ -5,8 +5,11 @@ we can make games here :)
 
 ====
 
-We can think of a super cool idea to do and make and we can do it and make it and play it and be proud of it
+hey dudes. welcome to 2D game development using LUA. this is the github where we can put our shit. 
 
+it's gonna be a fun time!
+
+-Nick~
 ===
 
 ##HUH
