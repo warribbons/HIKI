@@ -13,3 +13,7 @@ Goal: To make a cool game over the summer
 
 Language: Lua + löve (v0.80) -> [löve](http://love2d.org)
 
+Potential Game Ideas
+-------------------
+-System Shock 1 -esque game in 2d featuring a samurai waking up in a castle and finding out clues about the story and what happened in the castle and its scary
+
