@@ -7,70 +7,71 @@ player = {
 	x_velocity = 0,
 	--image
 	image = love.graphics.newImage("characters/player.png"),
-	height = 73,
-	width = 69
+
+	gravity = 400,
+	jump_height = 5
 }
-gravity = 400
-jump_height = 5
+
 
 
 -- quads, animation frames
 -------------------------------------------------------------------
-tileSizeX = 100
-tileSizeY = 100
-
+player.tileSizeX = 100
+player.tileSizeY = 100
+player.height = player.tileSizeX
+player.width = player.tileSizeX
 player.animations = {}
 player.animations['standing-center'] = {}
 player.animations['standing-center'].quads = {
-	love.graphics.newQuad(0,0,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight())
+	love.graphics.newQuad(0,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
 }
 
 player.animations['standing-left'] = {}
 player.animations['standing-left'].quads = {
-	love.graphics.newQuad(100,0,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight())
+	love.graphics.newQuad(100,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
 }
 
 player.animations['standing-right'] = {}
 player.animations['standing-right'].quads = {
-	love.graphics.newQuad(400,0,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight())
+	love.graphics.newQuad(400,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
 }
 
 player.animations['jumping-left'] = {}
 player.animations['jumping-left'].behaviour = 'once'
 player.animations['jumping-left'].frameInterval = 0.15
 player.animations['jumping-left'].quads = {
-	love.graphics.newQuad(200,700,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(200,800,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight())
+	love.graphics.newQuad(200,700,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
+	love.graphics.newQuad(200,800,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
 }
 
 player.animations['jumping-right'] = {}
 player.animations['jumping-right'].behaviour = 'once'
 player.animations['jumping-right'].frameInterval = 0.15
 player.animations['jumping-right'].quads = {
-	love.graphics.newQuad(300,700,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(300,800,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight())
+	love.graphics.newQuad(300,700,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
+	love.graphics.newQuad(300,800,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
 }
 
 player.animations['running-left'] = {}
 --player.animations['running-left'].behaviour = 'once'
 player.animations['running-left'].frameInterval = 0.2
 player.animations['running-left'].quads = {
-	love.graphics.newQuad(200,0,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(200,100,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(200,200,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(200,300,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(200,400,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight())
+	love.graphics.newQuad(200,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
+	love.graphics.newQuad(200,100,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
+	love.graphics.newQuad(200,200,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
+	love.graphics.newQuad(200,300,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
+	love.graphics.newQuad(200,400,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
 }
 
 player.animations['running-right'] = {}
 --player.animations['running-right'].behaviour = 'once'
 player.animations['running-right'].frameInterval = 0.2
 player.animations['running-right'].quads = {
-	love.graphics.newQuad(300,0,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(300,100,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(300,200,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(300,300,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(300,400,tileSizeX,tileSizeY,player.image:getWidth(), player.image:getHeight())
+	love.graphics.newQuad(300,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
+	love.graphics.newQuad(300,100,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
+	love.graphics.newQuad(300,200,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
+	love.graphics.newQuad(300,300,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
+	love.graphics.newQuad(300,400,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
 }
 
 player.state = 'standing-center'
@@ -81,17 +82,15 @@ player.animation.elapsed = 0
 --physics
 -------------------------------------------------------------------
 player.body = love.physics.newBody(world, 400, 200, "dynamic")
-player.shape = love.physics.newRectangleShape(69,73)
+player.shape = love.physics.newRectangleShape(80, 80)--player.height, player.width)
 player.fixture = love.physics.newFixture(player.body, 
 					player.shape, player.density)
-
-
 
 --imaging
 -------------------------------------------------------------------
 --offset for drawing the image at the corner of the colliding rectangle
-player.drawnOffsetX = player.width/3
-player.drawnOffsetY = player.height/3
+player.drawnOffsetX = player.tileSizeX/2
+player.drawnOffsetY = player.tileSizeY/2
 
 --initial positions
 -------------------------------------------------------------------
@@ -101,8 +100,8 @@ player.col_x, player.col_y = player.body:getWorldPoints(x1, y1, x2, y2)
 
 --initialize image on corner
 --image is drawn from the top left corner
-player.image_x = player.col_x - player.drawnOffsetX
-player.image_y = player.col_y - player.drawnOffsetY
+player.image_x = player.col_x + player.drawnOffsetX
+player.image_y = player.col_y + player.drawnOffsetY
 
 --player functions
 -------------------------------------------------------------------
@@ -130,7 +129,7 @@ end
 function player:moveUp(dt)
 	if player.y_velocity == 0 then
 	player.body:applyForce(0,-999000)
-	player.y_velocity = jump_height * 2000
+	player.y_velocity = player.jump_height * 2000
 	y = player.col_y + (player.speed * dt)
 	player:setOrientation('jumping')
 	end
@@ -193,7 +192,7 @@ function player:update_position(dt)
 	if player.y_velocity ~= 0 then -- we're probably jumping
         player.col_y = player.col_y + player.y_velocity * dt -- dt means we wont move at
         -- different speeds if the game lags
-		player.y_velocity = player.y_velocity - gravity * dt
+		player.y_velocity = player.y_velocity - player.gravity * dt
         if player.col_y > 557 then -- we hit the ground again
             player.y_velocity = 0
 			player:setOrientation('standing')

@@ -64,15 +64,15 @@ function love.draw()
 						0,
 						1,
 						1,
-						player.drawnOffsetX,
-						player.drawnOffsetY)
+						0,
+						0)
 
     --draw ground
     love.graphics.setColor(50, 50, 50)
     love.graphics.polygon("line", ground.body:getWorldPoints(ground.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
 
     --draw player collider
-    --love.graphics.polygon("fill", player.body:getWorldPoints(player.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
+    love.graphics.polygon("line", player.body:getWorldPoints(player.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
 
     --set back to default colour
     love.graphics.setColor(r, g, b, a)
