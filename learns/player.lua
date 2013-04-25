@@ -82,12 +82,8 @@ player.animation.elapsed = 0
 --physics
 -------------------------------------------------------------------
 player.body = love.physics.newBody(world, 400, 200, "dynamic")
-<<<<<<< HEAD
 player.shape = love.physics.newRectangleShape(player.height, player.width)
-=======
 player.body:setFixedRotation(true)
-player.shape = love.physics.newRectangleShape(80, 80)--player.height, player.width)
->>>>>>> added a zombie - update to collide boxes -- images
 player.fixture = love.physics.newFixture(player.body, 
 					player.shape, player.density)
 
