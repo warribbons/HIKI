@@ -1,1 +1,1 @@
-this is where i (nick) learn to do stuff on lua. plz don't alter my learning experience
+this is where we practice together :)
