@@ -22,7 +22,7 @@ end
 function love.update(dt)
 	--gets called often
 	--dt is the delta time from the last update
-	player:update_position()
+	player:update_position(dt)
 
 	world:update(dt) --this puts the world into motion
 
