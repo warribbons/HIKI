@@ -1,3 +1,7 @@
+-- this kind of creates a class of some sort...
+-- essentially it's a table with functions in it
+-- functions are added when something like control:moveLeft is defined
+-- as a function
 control = {}
 
 --control functions
@@ -5,36 +9,24 @@ function control:getKeyPress(dt)
 	--get the keypresses from the keyboard
 	local currentKeyPress = "no key down"
     if love.keyboard.isDown("left") then
-		control:moveLeft(dt)
+		player:moveLeft(dt)
  	elseif love.keyboard.isDown("right") then
-		control:moveRight(dt)
+		player:moveRight(dt)
  	elseif love.keyboard.isDown("up") then
-		control:moveUp(dt)
+		player:moveUp(dt)
  	elseif love.keyboard.isDown("down") then
-		control:moveDown(dt)
+		player:moveDown(dt)
+	end
+
+	--debug functions
+	if love.keyboard.isDown("r") then 
+		player:setPos(800/2, 650/2)
 	end
 end
 
-function getMouseLocation()
+function control:getMouseLocation()
 	--get x and y coordinates from the mouse
 	local x, y = love.mouse.getPosition()
 	return x, y
 end
 
---player functions
-function control:moveLeft(dt)
-	player.x = player.x - (player.speed * dt)
-end
-
-function control:moveRight(dt)
-	player.x = player.x + (player.speed * dt)
-end
-
---NOTE: y is downwards positive
-function control:moveUp(dt)
-	player.y = player.y - (player.speed * dt)
-end
-
-function control:moveDown(dt)
-	player.y = player.y + (player.speed * dt)
-end
