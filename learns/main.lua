@@ -5,9 +5,32 @@ world = love.physics.newWorld(0, 9.81*50, true) --creates a world
 require("controls")
 require("player")
 require("ground")
+require("zombie")
 
 --the current key on the screen
 keypress = "current key pressed"
+
+enemies = {}
+
+function spawnEnemy()
+	z = deepcopy(zombie) -- not working can only have 1 zombie
+	table.insert(enemies,zombie)
+end
+
+function deepcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[deepcopy(orig_key)] = deepcopy(orig_value)
+        end
+        setmetatable(copy, deepcopy(getmetatable(orig)))
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+end
 
 function love.load()
 	--gets called at the beggining of the program, initialize shit
@@ -29,6 +52,11 @@ function love.update(dt)
 
 	control:getKeyPress(dt)
 	mouseX, mouseY = control:getMouseLocation()
+	
+	for i, zombie in ipairs(enemies) do --these should all reference inner copy of table zombie
+		zombie:update_position(dt)
+		zombie:handle_animation(dt)
+	end
 
 end
 
@@ -76,5 +104,22 @@ function love.draw()
 
     --set back to default colour
     love.graphics.setColor(r, g, b, a)
+	if #enemies == 0 then --more than one enemy?
+		spawnEnemy()
+	end
+	print(enemies[0])
+	for i, zombie in ipairs(enemies) do --these should all reference inner copy of table zombie
+         love.graphics.drawq(zombie.image, 
+						zombie.animations[zombie.state].quads[zombie.animation.frame],
+						zombie.image_x,
+						zombie.image_y,
+						0,
+						1.5,
+						1.5,
+						0,
+						0)
+
+		love.graphics.polygon("line", zombie.body:getWorldPoints(zombie.shape:getPoints())) 
+    end
 end
 
