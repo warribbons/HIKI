@@ -23,6 +23,7 @@ function love.update(dt)
 	--gets called often
 	--dt is the delta time from the last update
 	player:update_position(dt)
+	player:handle_animation(dt)
 
 	world:update(dt) --this puts the world into motion
 
@@ -56,7 +57,15 @@ function love.draw()
     	"COL Y1: " .. player.col_y, 0, 12)
 
     --draw player
-    love.graphics.draw(player.image, player.image_x, player.image_y)
+    love.graphics.drawq(player.image, 
+						player.animations[player.state].quads[player.animation.frame],
+						player.image_x,
+						player.image_y,
+						0,
+						1,
+						1,
+						player.drawnOffsetX,
+						player.drawnOffsetY)
 
     --draw ground
     love.graphics.setColor(50, 50, 50)
