@@ -1,6 +1,7 @@
 
 player = {
 	--attributes
+	health = 100,
 	speed = 200,
 	density = 80,
 	y_velocity = 0,
@@ -20,7 +21,10 @@ player.tileSizeX = 100
 player.tileSizeY = 100
 player.height = 60--player.tileSizeX
 player.width = 80--player.tileSizeX
+
 player.animations = {}
+
+--static animations
 player.animations['standing-center'] = {}
 player.animations['standing-center'].quads = {
 	love.graphics.newQuad(0,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
@@ -36,6 +40,17 @@ player.animations['standing-right'].quads = {
 	love.graphics.newQuad(400,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
 }
 
+player.animations['crouching-left'] = {}
+player.animations['crouching-left'].quads = {
+	love.graphics.newQuad(100, 1100,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
+}
+
+player.animations['crouching-right'] = {}
+player.animations['crouching-right'].quads = {
+	love.graphics.newQuad(400, 1100,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
+}
+
+--jumping animations
 player.animations['jumping-left'] = {}
 player.animations['jumping-left'].behaviour = 'once'
 player.animations['jumping-left'].frameInterval = 0.15
@@ -51,6 +66,8 @@ player.animations['jumping-right'].quads = {
 	love.graphics.newQuad(300,700,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
 	love.graphics.newQuad(300,800,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
 }
+
+--running animations
 
 player.animations['running-left'] = {}
 --player.animations['running-left'].behaviour = 'once'
@@ -137,8 +154,11 @@ function player:moveUp(dt)
 end
 
 function player:moveDown(dt)
-	--y = player.col_y + (player.speed * dt)
-	--player.body:setPosition(player.col_x, y)
+	if string.find(player.state,'left') ~= nil then
+		player:setState('crouching-left')
+	else
+		player:setState('crouching-right')
+	end
 end
 
 function player:setPos(x, y)
@@ -149,6 +169,7 @@ function player:handle_animation(dt)
 	if string.find(player.state,'running') ~= nil and player.body:getLinearVelocity() == 0 then
 		player:setOrientation('standing')
 	end
+
 	if player.animations[player.state].behaviour == nil then
 		player:update_animation(dt)
 	else --we have a behaviour -- so far will only be 'once' [loop only once]
@@ -157,6 +178,7 @@ function player:handle_animation(dt)
 			player:update_animation(dt)
 		end
 	end
+
 end
 
 --update animate img
@@ -211,4 +233,31 @@ function player:setOrientation(action)
 	else
 		player:setState(action..'-right')
 	end
+end
+
+--draw function(s)
+
+--function draws the images and hitboxes
+function player:draw()
+	--animation/image
+    love.graphics.drawq(player.image, 
+						player.animations[player.state].quads[player.animation.frame],
+						player.image_x,
+						player.image_y,
+						0,
+						1,
+						1,
+						0,
+						0)
+	--hitbox
+    love.graphics.setColor(50, 50, 50)
+    love.graphics.polygon("line", player.body:getWorldPoints(player.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
+end
+
+--update function(s)
+
+--function updates everything that is needed
+function player:update_all(dt)
+	player:update_position(dt)
+	player:handle_animation(dt)
 end
