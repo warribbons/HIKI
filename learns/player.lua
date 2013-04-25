@@ -18,8 +18,8 @@ player = {
 -------------------------------------------------------------------
 player.tileSizeX = 100
 player.tileSizeY = 100
-player.height = player.tileSizeX
-player.width = player.tileSizeX
+player.height = 60--player.tileSizeX
+player.width = 80--player.tileSizeX
 player.animations = {}
 player.animations['standing-center'] = {}
 player.animations['standing-center'].quads = {
@@ -82,7 +82,7 @@ player.animation.elapsed = 0
 --physics
 -------------------------------------------------------------------
 player.body = love.physics.newBody(world, 400, 200, "dynamic")
-player.shape = love.physics.newRectangleShape(80, 80)--player.height, player.width)
+player.shape = love.physics.newRectangleShape(player.height, player.width)
 player.fixture = love.physics.newFixture(player.body, 
 					player.shape, player.density)
 
