@@ -13,7 +13,8 @@ function control:getKeyPress(dt)
 		player:moveLeft(dt,velx)
  	elseif love.keyboard.isDown("right") then
 		player:moveRight(dt,velx)
- 	elseif love.keyboard.isDown("up") then
+	end
+ 	if love.keyboard.isDown("up") then
 		player:moveUp(dt,vely)
  	elseif love.keyboard.isDown("down") then
 		player:moveDown(dt)

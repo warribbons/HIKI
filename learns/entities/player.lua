@@ -1,20 +1,19 @@
-require '../vector'
-
+require '../libraries/vector'
 Player = class('Player')
 
 function Player:initialize(pos)
 	--attributes
 	-------------------------------------------------------------------
 	self.health = 100
-	self.speed = 200
-	self.density = 80
+	self.speed = 500
+	self.density = 150
 	self.y_velocity = 0
 	self.x_velocity = 0
 	--image
 	self.image = love.graphics.newImage("characters/player.png")
 	
-	self.gravity = 500
-	self.jump_height = 250
+	self.gravity = 900
+	self.jump_height = 500
 	self.jump_stamina = 0.9
 
 	-- quads, animation frames
@@ -137,8 +136,9 @@ function Player:getKeyPress(dt)
     if love.keyboard.isDown("left") then
 		self:moveLeft(dt,velx)
  	elseif love.keyboard.isDown("right") then
-		self:moveRight(dt,velx)
- 	elseif love.keyboard.isDown("up") then
+		self:moveRight(dt,velx)	
+	end
+	if love.keyboard.isDown("up") then
 		self:moveUp(dt,vely)
  	elseif love.keyboard.isDown("down") then
 		self:moveDown(dt)

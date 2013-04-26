@@ -3,7 +3,7 @@ Zombie = class('Zombie')
 function Zombie:initialize(pos)
 	--attributes
 	-------------------------------------------------------------------
-	self.speed = 50
+	self.speed = 100
 	self.density = 80
 	self.y_velocity = 0
 	self.x_velocity = 0
