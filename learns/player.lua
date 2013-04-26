@@ -8,9 +8,11 @@ player = {
 	x_velocity = 0,
 	--image
 	image = love.graphics.newImage("characters/player.png"),
-
+	
 	gravity = 400,
-	jump_height = 5
+	jump_height = 250,
+	jump_stamina = 1
+	
 }
 
 
@@ -125,8 +127,8 @@ player.image_y = player.col_y + player.drawnOffsetY
 -------------------------------------------------------------------
 --movement
 --note: update the collider, not the image
-function player:moveLeft(dt)
-	if player.body:getLinearVelocity() > -player.speed then --limit speed
+function player:moveLeft(dt,velx)
+	if velx > -player.speed then --limit speed
 		x = player.col_x - (player.speed * dt)
 		player.body:applyForce(-player.speed*250, 0)
 		player.x_velocity = player.speed*250
@@ -134,8 +136,8 @@ function player:moveLeft(dt)
 		end
 end
 
-function player:moveRight(dt)
-	if player.body:getLinearVelocity() < player.speed then --limit speed
+function player:moveRight(dt,velx)
+	if velx < player.speed then --limit speed
 		x = player.col_x + (player.speed * dt)
 		player.body:applyForce(player.speed*250, 0)
 		player.x_velocity = player.speed*250
@@ -144,12 +146,13 @@ function player:moveRight(dt)
 end
 
 	--NOTE: y is downwards positive
-function player:moveUp(dt)
-	if player.y_velocity == 0 then
-	player.body:applyForce(0,-999000)
-	player.y_velocity = player.jump_height * 2000
-	y = player.col_y + (player.speed * dt)
-	player:setOrientation('jumping')
+function player:moveUp(dt,vely)
+	if player.jump_stamina >= 0 and vely <= 0 and vely >= -player.speed then
+		player.body:applyLinearImpulse(0,-player.jump_height*10)
+		player.y_velocity = player.jump_height * 2000
+		y = player.col_y + (player.speed * dt)
+		player:setOrientation('jumping')
+		player.jump_stamina = player.jump_stamina - .03
 	end
 end
 
@@ -213,12 +216,16 @@ end
 --update data
 function player:update_position(dt)
 	if player.y_velocity ~= 0 then -- we're probably jumping
+		local xvel,yvel = player.body:getLinearVelocity()
         player.col_y = player.col_y + player.y_velocity * dt -- dt means we wont move at
         -- different speeds if the game lags
 		player.y_velocity = player.y_velocity - player.gravity * dt
-        if player.col_y > 557 then -- we hit the ground again
+		print(yvel)
+        if yvel == 0 then -- we hit the ground again
+			print('wut')
             player.y_velocity = 0
 			player:setOrientation('standing')
+			player.jump_stamina = 1
         end
     end
 	--gets the collider coordinates and calcs the image start location

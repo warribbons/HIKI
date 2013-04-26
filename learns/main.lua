@@ -53,6 +53,9 @@ function love.update(dt)
 
 	control:getKeyPress(dt)
 	mouseX, mouseY = control:getMouseLocation()
+	
+
+
 end
 
 function love.keypressed(key)

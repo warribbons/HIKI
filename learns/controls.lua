@@ -8,12 +8,13 @@ control = {}
 function control:getKeyPress(dt)
 	--get the keypresses from the keyboard
 	local currentKeyPress = "no key down"
+	local velx, vely = player.body:getLinearVelocity()
     if love.keyboard.isDown("left") then
-		player:moveLeft(dt)
+		player:moveLeft(dt,velx)
  	elseif love.keyboard.isDown("right") then
-		player:moveRight(dt)
+		player:moveRight(dt,velx)
  	elseif love.keyboard.isDown("up") then
-		player:moveUp(dt)
+		player:moveUp(dt,vely)
  	elseif love.keyboard.isDown("down") then
 		player:moveDown(dt)
 	end
