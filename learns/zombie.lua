@@ -10,62 +10,64 @@ zombie = {
 	height = 65,
 	width = 30,
 	state = 'risen',
-	scale = 1.5
+	scale = 1.5,
+
+	gravity = 400,
+	jump_height = 5
 }
-gravity = 400
-jump_height = 5
+
 
 -- quads, animation frames
 -------------------------------------------------------------------
-tileSizeX = 30
-tileSizeY = 65
+zombie.tileSizeX = 30
+zombie.tileSizeY = 65
 
 zombie.animations = {}
 zombie.animations['risen'] = {}
 zombie.animations['risen'].behaviour = 'once'
 zombie.animations['risen'].frameInterval = 0.5
 zombie.animations['risen'].quads = {
-	love.graphics.newQuad(6*zombie.width,0,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(7*zombie.width,0,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(8*zombie.width,0,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(9*zombie.width,0,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(10*zombie.width,0,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight())
+	love.graphics.newQuad(6*zombie.width,0,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(7*zombie.width,0,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(8*zombie.width,0,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(9*zombie.width,0,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(10*zombie.width,0,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight())
 }
 
 zombie.animations['standing-left'] = {}
 zombie.animations['standing-left'].quads = {
-	love.graphics.newQuad(3*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(3*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
 }
 
 zombie.animations['standing-right'] = {}
 zombie.animations['standing-right'].quads = {
-	love.graphics.newQuad(18*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(18*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
 }
 
 zombie.animations['walking-left'] = {}
 zombie.animations['walking-left'].frameInterval = 0.5
 zombie.animations['walking-left'].quads = {
-	love.graphics.newQuad(0*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(1*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(2*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(3*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(4*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(5*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(6*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(7*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight())
+	love.graphics.newQuad(0*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(1*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(2*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(3*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(4*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(5*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(6*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(7*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight())
 }
 
 zombie.animations['walking-right'] = {}
 zombie.animations['walking-right'].frameInterval = 0.5
 zombie.animations['walking-right'].quads = {
-	love.graphics.newQuad(21*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(20*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(19*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(18*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(17*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(16*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(15*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
-	love.graphics.newQuad(14*zombie.width,1*zombie.height,tileSizeX,tileSizeY,zombie.image:getWidth(), zombie.image:getHeight())
+	love.graphics.newQuad(21*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(20*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(19*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(18*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(17*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(16*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(15*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight()),
+	love.graphics.newQuad(14*zombie.width,1*zombie.height,zombie.tileSizeX,zombie.tileSizeY,zombie.image:getWidth(), zombie.image:getHeight())
 }
 
 zombie.animation = {}
@@ -125,7 +127,7 @@ end
 function zombie:moveUp(dt)
 	if zombie.y_velocity == 0 then
 	zombie.body:applyForce(0,-999000)
-	zombie.y_velocity = jump_height * 2000
+	zombie.y_velocity = zombie.jump_height * 2000
 	y = zombie.col_y + (zombie.speed * dt)
 	zombie:setOrientation('jumping')
 	end
