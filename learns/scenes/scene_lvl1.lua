@@ -1,9 +1,10 @@
 
 
-require("controls")
-require("player")
-require("ground")
-require("zombie")
+require("../controls")
+require("../entities/player")
+require("../entities/ground")
+require("../entities/zombie")
+
 require("vector")
 
 lvl1 = Gamestate.new()

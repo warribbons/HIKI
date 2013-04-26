@@ -1,7 +1,7 @@
-require 'middleclass'
-require 'middleclass-extras'
-require 'gamestate'
-require 'scene_lvl1'
+require 'libraries/middleclass'
+require 'libraries/middleclass-extras'
+require 'libraries/gamestate'
+require 'scenes/scene_lvl1'
 
 function love.load()
 	love.graphics.setCaption('Testing')

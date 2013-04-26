@@ -1,5 +1,5 @@
 
-require 'middleclass'
+require '../libraries/middleclass'
 
 Ground = class('Ground')
 
