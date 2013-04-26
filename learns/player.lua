@@ -1,256 +1,277 @@
+require 'vector'
 
-player = {
+Player = class('Player')
+
+function Player:initialize(pos)
 	--attributes
-	health = 100,
-	speed = 200,
-	density = 80,
-	y_velocity = 0,
-	x_velocity = 0,
+	-------------------------------------------------------------------
+	self.health = 100
+	self.speed = 200
+	self.density = 80
+	self.y_velocity = 0
+	self.x_velocity = 0
 	--image
-	image = love.graphics.newImage("characters/player.png"),
+	self.image = love.graphics.newImage("characters/player.png")
 	
-	gravity = 400,
-	jump_height = 250,
-	jump_stamina = 1
-	
-}
+	self.gravity = 500
+	self.jump_height = 250
+	self.jump_stamina = 0.9
 
+	-- quads, animation frames
+	-------------------------------------------------------------------
+	self.tileSizeX = 100
+	self.tileSizeY = 100
+	self.height = 60--self.tileSizeX
+	self.width = 80--self.tileSizeX
 
+	self.animations = {}
 
--- quads, animation frames
--------------------------------------------------------------------
-player.tileSizeX = 100
-player.tileSizeY = 100
-player.height = 60--player.tileSizeX
-player.width = 80--player.tileSizeX
+	--static animations
+	self.animations['standing-center'] = {}
+	self.animations['standing-center'].quads = {
+		love.graphics.newQuad(0,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+	}
 
-player.animations = {}
+	self.animations['standing-left'] = {}
+	self.animations['standing-left'].quads = {
+		love.graphics.newQuad(100,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+	}
 
---static animations
-player.animations['standing-center'] = {}
-player.animations['standing-center'].quads = {
-	love.graphics.newQuad(0,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
-}
+	self.animations['standing-right'] = {}
+	self.animations['standing-right'].quads = {
+		love.graphics.newQuad(400,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+	}
 
-player.animations['standing-left'] = {}
-player.animations['standing-left'].quads = {
-	love.graphics.newQuad(100,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
-}
+	self.animations['crouching-left'] = {}
+	self.animations['crouching-left'].quads = {
+		love.graphics.newQuad(100, 1100,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+	}
 
-player.animations['standing-right'] = {}
-player.animations['standing-right'].quads = {
-	love.graphics.newQuad(400,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
-}
+	self.animations['crouching-right'] = {}
+	self.animations['crouching-right'].quads = {
+		love.graphics.newQuad(400, 1100,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+	}
 
-player.animations['crouching-left'] = {}
-player.animations['crouching-left'].quads = {
-	love.graphics.newQuad(100, 1100,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
-}
+	--jumping animations
+	self.animations['jumping-left'] = {}
+	self.animations['jumping-left'].behaviour = 'once'
+	self.animations['jumping-left'].frameInterval = 0.15
+	self.animations['jumping-left'].quads = {
+		love.graphics.newQuad(200,700,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(200,800,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+	}
 
-player.animations['crouching-right'] = {}
-player.animations['crouching-right'].quads = {
-	love.graphics.newQuad(400, 1100,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
-}
+	self.animations['jumping-right'] = {}
+	self.animations['jumping-right'].behaviour = 'once'
+	self.animations['jumping-right'].frameInterval = 0.15
+	self.animations['jumping-right'].quads = {
+		love.graphics.newQuad(300,700,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(300,800,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+	}
 
---jumping animations
-player.animations['jumping-left'] = {}
-player.animations['jumping-left'].behaviour = 'once'
-player.animations['jumping-left'].frameInterval = 0.15
-player.animations['jumping-left'].quads = {
-	love.graphics.newQuad(200,700,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(200,800,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
-}
+	--running animations
 
-player.animations['jumping-right'] = {}
-player.animations['jumping-right'].behaviour = 'once'
-player.animations['jumping-right'].frameInterval = 0.15
-player.animations['jumping-right'].quads = {
-	love.graphics.newQuad(300,700,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(300,800,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
-}
+	self.animations['running-left'] = {}
+	--self.animations['running-left'].behaviour = 'once'
+	self.animations['running-left'].frameInterval = 0.2
+	self.animations['running-left'].quads = {
+		love.graphics.newQuad(200,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(200,100,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(200,200,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(200,300,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(200,400,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+	}
 
---running animations
+	self.animations['running-right'] = {}
+	--self.animations['running-right'].behaviour = 'once'
+	self.animations['running-right'].frameInterval = 0.2
+	self.animations['running-right'].quads = {
+		love.graphics.newQuad(300,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(300,100,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(300,200,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(300,300,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(300,400,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+	}
 
-player.animations['running-left'] = {}
---player.animations['running-left'].behaviour = 'once'
-player.animations['running-left'].frameInterval = 0.2
-player.animations['running-left'].quads = {
-	love.graphics.newQuad(200,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(200,100,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(200,200,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(200,300,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(200,400,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
-}
+	self.state = 'standing-center'
+	self.animation = {}
+	self.animation.frame = 1
+	self.animation.elapsed = 0
 
-player.animations['running-right'] = {}
---player.animations['running-right'].behaviour = 'once'
-player.animations['running-right'].frameInterval = 0.2
-player.animations['running-right'].quads = {
-	love.graphics.newQuad(300,0,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(300,100,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(300,200,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(300,300,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight()),
-	love.graphics.newQuad(300,400,player.tileSizeX,player.tileSizeY,player.image:getWidth(), player.image:getHeight())
-}
+	--physics
+	-------------------------------------------------------------------
+	self.body = love.physics.newBody(world, pos.x, pos.y, "dynamic")
+	self.shape = love.physics.newRectangleShape(self.height, self.width)
+	self.body:setFixedRotation(true)
+	self.fixture = love.physics.newFixture(self.body, 
+						self.shape, self.density)
 
-player.state = 'standing-center'
-player.animation = {}
-player.animation.frame = 1
-player.animation.elapsed = 0
+	--imaging
+	-------------------------------------------------------------------
+	--offset for drawing the image at the corner of the colliding rectangle
+	self.drawnOffsetX = self.tileSizeX/2
+	self.drawnOffsetY = self.tileSizeY/2
 
---physics
--------------------------------------------------------------------
-player.body = love.physics.newBody(world, 400, 200, "dynamic")
-player.shape = love.physics.newRectangleShape(player.height, player.width)
-player.body:setFixedRotation(true)
-player.fixture = love.physics.newFixture(player.body, 
-					player.shape, player.density)
+	--initial positions
+	-------------------------------------------------------------------
+	--initialize collider rectangle
+	--rectangle is drawn from the centre
+	self.col_x, self.col_y = self.body:getWorldPoints(x1, y1, x2, y2)
 
---imaging
--------------------------------------------------------------------
---offset for drawing the image at the corner of the colliding rectangle
-player.drawnOffsetX = player.tileSizeX/2
-player.drawnOffsetY = player.tileSizeY/2
+	--initialize image on corner
+	--image is drawn from the top left corner
+	self.image_x = self.col_x + self.drawnOffsetX
+	self.image_y = self.col_y + self.drawnOffsetY
 
---initial positions
--------------------------------------------------------------------
---initialize collider rectangle
---rectangle is drawn from the centre
-player.col_x, player.col_y = player.body:getWorldPoints(x1, y1, x2, y2)
-
---initialize image on corner
---image is drawn from the top left corner
-player.image_x = player.col_x + player.drawnOffsetX
-player.image_y = player.col_y + player.drawnOffsetY
+end
 
 --player functions
 -------------------------------------------------------------------
 --movement
 --note: update the collider, not the image
-function player:moveLeft(dt,velx)
-	if velx > -player.speed then --limit speed
-		x = player.col_x - (player.speed * dt)
-		player.body:applyForce(-player.speed*250, 0)
-		player.x_velocity = player.speed*250
-		player:setState('running-left')
+--control functions
+function Player:getKeyPress(dt)
+	--get the keypresses from the keyboard
+	local currentKeyPress = "no key down"
+	local velx, vely = self.body:getLinearVelocity()
+    if love.keyboard.isDown("left") then
+		self:moveLeft(dt,velx)
+ 	elseif love.keyboard.isDown("right") then
+		self:moveRight(dt,velx)
+ 	elseif love.keyboard.isDown("up") then
+		self:moveUp(dt,vely)
+ 	elseif love.keyboard.isDown("down") then
+		self:moveDown(dt)
+	end
+
+	--debug functions
+	if love.keyboard.isDown("r") then 
+		self:setPos(800/2, 650/2)
+	end
+end
+
+function Player:moveLeft(dt,velx)
+	if velx > -self.speed then --limit speed
+		x = self.col_x - (self.speed * dt)
+		self.body:applyForce(-self.speed*250, 0)
+		self.x_velocity = self.speed*250
+		self:setState('running-left')
 		end
 end
 
-function player:moveRight(dt,velx)
-	if velx < player.speed then --limit speed
-		x = player.col_x + (player.speed * dt)
-		player.body:applyForce(player.speed*250, 0)
-		player.x_velocity = player.speed*250
-		player:setState('running-right')
+function Player:moveRight(dt,velx)
+	if velx < self.speed then --limit speed
+		x = self.col_x + (self.speed * dt)
+		self.body:applyForce(self.speed*250, 0)
+		self.x_velocity = self.speed*250
+		self:setState('running-right')
 	end
 end
 
 	--NOTE: y is downwards positive
-function player:moveUp(dt,vely)
-	if player.jump_stamina >= 0 and vely <= 0 and vely >= -player.speed then
-		player.body:applyLinearImpulse(0,-player.jump_height*10)
-		player.y_velocity = player.jump_height * 2000
-		y = player.col_y + (player.speed * dt)
-		player:setOrientation('jumping')
-		player.jump_stamina = player.jump_stamina - .03
+function Player:moveUp(dt,vely)
+	if self.jump_stamina >= 0 and vely <= 0 and vely >= -self.speed then
+		self.body:applyLinearImpulse(0,-self.jump_height*10)
+		self.y_velocity = self.jump_height * 2000
+		y = self.col_y + (self.speed * dt)
+		self:setOrientation('jumping')
+		self.jump_stamina = self.jump_stamina - .03
 	end
 end
 
-function player:moveDown(dt)
-	if string.find(player.state,'left') ~= nil then
-		player:setState('crouching-left')
+function Player:moveDown(dt)
+	if string.find(self.state,'left') ~= nil then
+		self:setState('crouching-left')
 	else
-		player:setState('crouching-right')
+		self:setState('crouching-right')
 	end
 end
 
-function player:setPos(x, y)
-	player.body:setPosition(x, y)
+function Player:setPos(x, y)
+	self.body:setPosition(x, y)
 end
 
-function player:handle_animation(dt)
-	if string.find(player.state,'running') ~= nil and player.body:getLinearVelocity() == 0 then
-		player:setOrientation('standing')
+function Player:handle_animation(dt)
+	if string.find(self.state,'running') ~= nil and self.body:getLinearVelocity() == 0 then
+		self:setOrientation('standing')
 	end
 
-	if player.animations[player.state].behaviour == nil then
-		player:update_animation(dt)
+	if self.animations[self.state].behaviour == nil then
+		self:update_animation(dt)
 	else --we have a behaviour -- so far will only be 'once' [loop only once]
-		if player.animation.elapsed ~= 0 or 
-		player.animation.frame + 1 > #player.animations[player.state].quads  then
-			player:update_animation(dt)
+		if self.animation.elapsed ~= 0 or 
+		self.animation.frame + 1 > #self.animations[self.state].quads  then
+			self:update_animation(dt)
 		end
 	end
 
 end
 
 --update animate img
-function player:update_animation(dt)
-	player.animation.elapsed = player.animation.elapsed + dt
+function Player:update_animation(dt)
+	self.animation.elapsed = self.animation.elapsed + dt
   
   -- Handle animation
-  if #player.animations[player.state].quads > 1 then -- more than one frame
-    local interval = player.animations[player.state].frameInterval
+  if #self.animations[self.state].quads > 1 then -- more than one frame
+    local interval = self.animations[self.state].frameInterval
     
-    if player.animation.elapsed > interval then -- switch to next frame
+    if self.animation.elapsed > interval then -- switch to next frame
 
-      if player.animation.frame + 1 > #player.animations[player.state].quads then-- loop around
-        player.animation.frame = 1
+      if self.animation.frame + 1 > #self.animations[self.state].quads then-- loop around
+        self.animation.frame = 1
 	 else
-		    player.animation.frame = player.animation.frame + 1
+		    self.animation.frame = self.animation.frame + 1
       end
-      player.animation.elapsed = 0
+      self.animation.elapsed = 0
     end
   end
 end
 
 --update players animation state
-function player:setState(newstate)
-  if (player.state ~= newstate) then
-    player.state = newstate
-    player.animation.current = 1
-    player.animation.frame = 1
+function Player:setState(newstate)
+  if (self.state ~= newstate) then
+    self.state = newstate
+    self.animation.current = 1
+    self.animation.frame = 1
   end
 end
 
 --update data
-function player:update_position(dt)
-	if player.y_velocity ~= 0 then -- we're probably jumping
-		local xvel,yvel = player.body:getLinearVelocity()
-        player.col_y = player.col_y + player.y_velocity * dt -- dt means we wont move at
+function Player:update_position(dt)
+	if self.y_velocity ~= 0 then -- we're probably jumping
+		local xvel,yvel = self.body:getLinearVelocity()
+        self.col_y = self.col_y + self.y_velocity * dt -- dt means we wont move at
         -- different speeds if the game lags
-		player.y_velocity = player.y_velocity - player.gravity * dt
-		print(yvel)
+		self.y_velocity = self.y_velocity - self.gravity * dt
         if yvel == 0 then -- we hit the ground again
-			print('wut')
-            player.y_velocity = 0
-			player:setOrientation('standing')
-			player.jump_stamina = 1
+            self.y_velocity = 0
+			self:setOrientation('standing')
+			self.jump_stamina = 1
         end
     end
 	--gets the collider coordinates and calcs the image start location
-	player.col_x, player.col_y = player.body:getWorldPoints(x1, y1, x2, y2)
-	player.image_x = player.col_x - player.drawnOffsetX
-	player.image_y = player.col_y - player.drawnOffsetY
+	self.col_x, self.col_y = self.body:getWorldPoints(x1, y1, x2, y2)
+	self.image_x = self.col_x - self.drawnOffsetX
+	self.image_y = self.col_y - self.drawnOffsetY
 end
 
-function player:setOrientation(action)
-	if string.find(player.state,'left') ~= nil then
-		player:setState(action..'-left')
+function Player:setOrientation(action)
+	if string.find(self.state,'left') ~= nil then
+		self:setState(action..'-left')
 	else
-		player:setState(action..'-right')
+		self:setState(action..'-right')
 	end
 end
 
 --draw function(s)
 
 --function draws the images and hitboxes
-function player:draw()
+function Player:draw()
 	--animation/image
-    love.graphics.drawq(player.image, 
-						player.animations[player.state].quads[player.animation.frame],
-						player.image_x,
-						player.image_y,
+    love.graphics.drawq(self.image, 
+						self.animations[self.state].quads[self.animation.frame],
+						self.image_x,
+						self.image_y,
 						0,
 						1,
 						1,
@@ -258,13 +279,16 @@ function player:draw()
 						0)
 	--hitbox
     love.graphics.setColor(50, 50, 50)
-    love.graphics.polygon("line", player.body:getWorldPoints(player.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
+    --love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
 end
 
 --update function(s)
 
 --function updates everything that is needed
-function player:update_all(dt)
-	player:update_position(dt)
-	player:handle_animation(dt)
+function Player:update(dt)
+	self:getKeyPress(dt)
+	self:update_position(dt)
+	love.graphics.print("PLAYER -> COL X1: " .. self.col_x ..
+    	"COL Y1: " .. self.col_y, 0, 12)
+	self:handle_animation(dt)
 end

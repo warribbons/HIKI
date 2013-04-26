@@ -1,6 +1,12 @@
-ground = {}
+
+require 'middleclass'
+
+Ground = class('Ground')
 
 --physics
-ground.body = love.physics.newBody(world, 0, 0, "static") --not dynamic
-ground.shape = love.physics.newRectangleShape(800/2, 600, 800, 10)
-ground.fixture = love.physics.newFixture(ground.body, ground.shape)
+function Ground:initialize()
+	self.body = love.physics.newBody(world, 0, 0, "static") --not dynamic
+	self.shape = love.physics.newRectangleShape(800/2, 600, 800, 10)
+	self.fixture = love.physics.newFixture(self.body, self.shape)
+end
+
