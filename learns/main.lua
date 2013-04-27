@@ -3,6 +3,7 @@ require 'libraries/middleclass-extras'
 require 'libraries/gamestate'
 require 'scenes/scene_lvl1'
 
+
 function love.load()
 	love.graphics.setCaption('Testing')
 	  -- Seed random

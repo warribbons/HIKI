@@ -1,6 +1,6 @@
 Zombie = class('Zombie')
 
-function Zombie:initialize(pos)
+function Zombie:initialize(pos,animations)
 	--attributes
 	-------------------------------------------------------------------
 	self.speed = 100
@@ -15,63 +15,10 @@ function Zombie:initialize(pos)
 	self.scale = 1.5
 
 	self.gravity = 400
-	self.ump_height = 5
-	
+	self.jump_height = 5
 	-- quads, animation frames
 	-------------------------------------------------------------------
-	self.tileSizeX = 30
-	self.tileSizeY = 65
-
-	self.animations = {}
-	self.animations['risen'] = {}
-	self.animations['risen'].behaviour = 'once'
-	self.animations['risen'].frameInterval = 1
-	self.animations['risen'].quads = {
-		love.graphics.newQuad(6*self.width,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(7*self.width,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(8*self.width,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(9*self.width,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(10*self.width,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		--redundant would like to remove this if can fix animation to index properly
-		love.graphics.newQuad(10*self.width,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
-	}
-
-	self.animations['standing-left'] = {}
-	self.animations['standing-left'].quads = {
-		love.graphics.newQuad(3*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-	}
-
-	self.animations['standing-right'] = {}
-	self.animations['standing-right'].quads = {
-		love.graphics.newQuad(18*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-	}
-
-	self.animations['walking-left'] = {}
-	self.animations['walking-left'].frameInterval = 0.5
-	self.animations['walking-left'].quads = {
-		love.graphics.newQuad(0*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(1*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(2*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(3*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(4*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(5*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(6*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(7*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
-	}
-
-	self.animations['walking-right'] = {}
-	self.animations['walking-right'].frameInterval = 0.5
-	self.animations['walking-right'].quads = {
-		love.graphics.newQuad(21*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(20*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(19*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(18*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(17*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(16*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(15*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(14*self.width,1*self.height,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
-	}
-
+	self.animations = animations
 	self.animation = {}
 	self.animation.frame = 1
 	self.animation.elapsed = 0
@@ -105,10 +52,6 @@ function Zombie:initialize(pos)
 
 end
 
-
-
-
-
 --zombie functions
 -------------------------------------------------------------------
 --movement
@@ -124,9 +67,7 @@ end
 
 function Zombie:moveRight(dt)
 	if self.body:getLinearVelocity() < self.speed then --limit speed
-		x = self.col_x + (self.speed * dt)
 		self.body:applyForce(self.speed*250, 0)
-		self.x_velocity = self.speed*250
 		self:setState('walking-right')
 	end
 end
@@ -135,8 +76,6 @@ end
 function Zombie:moveUp(dt)
 	if self.y_velocity == 0 then
 	self.body:applyForce(0,-999000)
-	self.y_velocity = self.jump_height * 2000
-	y = self.col_y + (self.speed * dt)
 	self:setOrientation('jumping')
 	end
 end
@@ -200,11 +139,12 @@ function Zombie:update_position(dt,pos)
 				self:moveRight(dt)
 			end
 		end
+	end
 		--gets the collider coordinates and calcs the image start location
 		self.col_x, self.col_y = self.body:getWorldPoints(x1, y1, x2, y2)
 		self.image_x = self.col_x - self.drawnOffsetX
 		self.image_y = self.col_y - self.drawnOffsetY
-	end
+
 end
 
 function Zombie:setOrientation(action)
@@ -219,13 +159,11 @@ end
 
 --function draws the images and hitboxes
 function Zombie:draw()
-	--print(enemies[0])
-	--for i, zombie in ipairs(enemies) do --these should all reference inner copy of table zombie
 	--animation
 	    --set back to default colour
 				love.graphics.setColor(r, g, b, a)
 				love.graphics.drawq(self.image, 
-						self.animations[self.state].quads[self.animation.frame],
+						zombieSprites.animations[self.state].quads[self.animation.frame],
 						self.image_x,
 						self.image_y,
 						0,
@@ -236,7 +174,7 @@ function Zombie:draw()
 
 	--hitbox
    		 love.graphics.setColor(50, 50, 50)
-		--love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) 
+		love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) 
 
 end
 

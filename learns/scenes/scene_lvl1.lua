@@ -4,6 +4,7 @@ require("../controls")
 require("../entities/player")
 require("../entities/ground")
 require("../entities/zombie")
+require '../libraries/spritemap/zombieSprites'
 
 require("vector")
 
@@ -48,7 +49,7 @@ end
 
 
 function lvl1.spawnEnemy(self)
-	local zomb = Zombie(vector(math.random(100,99999),555))
+	local zomb = Zombie(vector(math.random(100,99999),555),zombieSprites.animations)
 	table.insert(self.enemies, zomb)
 end
 
@@ -77,9 +78,6 @@ function lvl1.draw(self)
 	camera:set()
 		--get the default colour
 		r, g, b, a = love.graphics.getColor()
-
-		--love.graphics.print("MOUSE POS -> X: " .. mouseX .. " Y: " .. mouseY
-		--	.. "    KEYPRESS: " .. keypress, 0, 0)
 
 		--draw player
 

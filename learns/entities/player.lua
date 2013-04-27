@@ -14,7 +14,7 @@ function Player:initialize(pos)
 	
 	self.gravity = 900
 	self.jump_height = 500
-	self.jump_stamina = 0.9
+	self.jump_stamina = 1
 
 	-- quads, animation frames
 	-------------------------------------------------------------------
@@ -152,30 +152,25 @@ end
 
 function Player:moveLeft(dt,velx)
 	if velx > -self.speed then --limit speed
-		x = self.col_x - (self.speed * dt)
 		self.body:applyForce(-self.speed*250, 0)
-		self.x_velocity = self.speed*250
 		self:setState('running-left')
 		end
 end
 
 function Player:moveRight(dt,velx)
 	if velx < self.speed then --limit speed
-		x = self.col_x + (self.speed * dt)
 		self.body:applyForce(self.speed*250, 0)
-		self.x_velocity = self.speed*250
 		self:setState('running-right')
 	end
 end
 
 	--NOTE: y is downwards positive
 function Player:moveUp(dt,vely)
+print(self.jump_stamina)
 	if self.jump_stamina >= 0 and vely <= 0 and vely >= -self.speed then
 		self.body:applyLinearImpulse(0,-self.jump_height*10)
-		self.y_velocity = self.jump_height * 2000
-		y = self.col_y + (self.speed * dt)
 		self:setOrientation('jumping')
-		self.jump_stamina = self.jump_stamina - .03
+		self.jump_stamina = self.jump_stamina - .02
 	end
 end
 
@@ -238,17 +233,16 @@ end
 
 --update data
 function Player:update_position(dt)
-	if self.y_velocity ~= 0 then -- we're probably jumping
-		local xvel,yvel = self.body:getLinearVelocity()
-        self.col_y = self.col_y + self.y_velocity * dt -- dt means we wont move at
-        -- different speeds if the game lags
-		self.y_velocity = self.y_velocity - self.gravity * dt
-        if yvel == 0 then -- we hit the ground again
-            self.y_velocity = 0
-			self:setOrientation('standing')
-			self.jump_stamina = 1
-        end
-    end
+	local xvel,yvel = self.body:getLinearVelocity()
+	if string.find(self.state,'jumping') ~= nil and yvel == 0 then 
+		self:setOrientation('standing')
+	end
+	if string.find(self.state,'jumping') == nil and yvel < -20 then 
+		self:setOrientation('jumping')
+	end
+	if (yvel >= -1 and yvel <= 5) and self.jump_stamina ~= 1 then -- we hit the ground again
+		self.jump_stamina = 1
+	end
 	--gets the collider coordinates and calcs the image start location
 	self.col_x, self.col_y = self.body:getWorldPoints(x1, y1, x2, y2)
 	self.image_x = self.col_x - self.drawnOffsetX
@@ -279,7 +273,7 @@ function Player:draw()
 						0)
 	--hitbox
     love.graphics.setColor(50, 50, 50)
-    --love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
+    love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
 end
 
 --update function(s)
@@ -288,7 +282,5 @@ end
 function Player:update(dt)
 	self:getKeyPress(dt)
 	self:update_position(dt)
-	love.graphics.print("PLAYER -> COL X1: " .. self.col_x ..
-    	"COL Y1: " .. self.col_y, 0, 12)
 	self:handle_animation(dt)
 end
