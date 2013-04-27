@@ -6,7 +6,7 @@
 	zombieSprites.animations = {}
 	zombieSprites.animations['risen'] = {}
 	zombieSprites.animations['risen'].behaviour = 'once'
-	zombieSprites.animations['risen'].frameInterval = 1
+	zombieSprites.animations['risen'].frameInterval = 0.5
 	zombieSprites.animations['risen'].quads = {
 		love.graphics.newQuad(6*zombieSprites.tileSizeX,0,zombieSprites.tileSizeX,zombieSprites.tileSizeY,zombieSprites.image:getWidth(), zombieSprites.image:getHeight()),
 		love.graphics.newQuad(7*zombieSprites.tileSizeX,0,zombieSprites.tileSizeX,zombieSprites.tileSizeY,zombieSprites.image:getWidth(), zombieSprites.image:getHeight()),

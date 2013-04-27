@@ -11,14 +11,13 @@ require("vector")
 lvl1 = Gamestate.new()
 lvl1.test = ''
 function lvl1.enter(self, pre)
-
 	--gets called at the beggining of the program, initialize shit
 	--the current key on the screen
 
 	--physics initialization
-	love.physics.setMeter(50) --set a meter to be 64px
+	love.physics.setMeter(64) --set a meter to be 64px
 	
-	world = love.physics.newWorld(0, 9.81*100, true) --creates a world
+	world = love.physics.newWorld(0, 9.81*64, true) --creates a world
 	lvl1.keypress = "current key pressed"
 
 	lvl1.player = Player(vector(100,575))
@@ -49,7 +48,8 @@ end
 
 
 function lvl1.spawnEnemy(self)
-	local zomb = Zombie(vector(math.random(100,99999),555),zombieSprites.animations)
+	local playerloc =  math.floor(self.player.body:getX())
+	local zomb = Zombie(vector(math.random(playerloc,playerloc+1000),555),zombieSprites.animations)
 	table.insert(self.enemies, zomb)
 end
 
@@ -62,11 +62,19 @@ function lvl1.update(self, dt)
 
 	self.player:update(dt)
 
-	if #self.enemies ~= 100 then
+	if #self.enemies ~= 10 then
 		self:spawnEnemy(self)
 	end
 	for i, zomb in ipairs(self.enemies) do
-		zomb:update(dt,vector(self.player.body:getX(),self.player.body:getY()))
+		if math.abs(zomb.col_x - self.player.body:getX()) < 1000 then
+			zomb:update(dt,vector(self.player.body:getX(),self.player.body:getY()))
+		--elseif zomb.state ~= 'risen' then
+		else
+			zomb.body:destroy()
+			for k,v in pairs(zomb) do zomb[k]=nil end
+			table.remove(self.enemies, i)
+			--print('number of enemies='..#self.enemies..' distance apart='..math.abs(zomb.col_x - self.player.body:getX()) )
+		end
 	end
 	--lvl1.zombie:update(dt)
 	--mouseX, mouseY = control:getMouseLocation()
@@ -87,7 +95,9 @@ function lvl1.draw(self)
 		--draw zombie
 			if #self.enemies ~= 0 then
 				for i, zomb in ipairs(self.enemies) do
-					zomb:draw()
+					if zomb.col_x - self.player.body:getX() < 1000 then
+						zomb:draw()
+					end
 				end
 			end
 		--draw ground

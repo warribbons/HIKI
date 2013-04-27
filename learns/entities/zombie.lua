@@ -5,15 +5,12 @@ function Zombie:initialize(pos,animations)
 	-------------------------------------------------------------------
 	self.speed = 100
 	self.density = 80
-	self.y_velocity = 0
-	self.x_velocity = 0
 	--image
 	self.image = love.graphics.newImage("characters/zombie.png")
 	self.height = 65
 	self.width = 30
 	self.state = 'risen'
 	self.scale = 1.5
-
 	self.gravity = 400
 	self.jump_height = 5
 	-- quads, animation frames
@@ -58,9 +55,7 @@ end
 --note: update the collider, not the image
 function Zombie:moveLeft(dt)
 	if self.body:getLinearVelocity() > -self.speed then --limit speed
-		x = self.col_x - (self.speed * dt)
 		self.body:applyForce(-self.speed*250, 0)
-		self.x_velocity = self.speed*250
 		self:setState('walking-left')
 	end
 end
@@ -74,10 +69,7 @@ end
 
 	--NOTE: y is downwards positive
 function Zombie:moveUp(dt)
-	if self.y_velocity == 0 then
-	self.body:applyForce(0,-999000)
-	self:setOrientation('jumping')
-	end
+
 end
 
 function Zombie:setPos(x, y)
@@ -174,7 +166,7 @@ function Zombie:draw()
 
 	--hitbox
    		 love.graphics.setColor(50, 50, 50)
-		love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) 
+		--love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) 
 
 end
 

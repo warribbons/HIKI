@@ -5,7 +5,7 @@ function Player:initialize(pos)
 	--attributes
 	-------------------------------------------------------------------
 	self.health = 100
-	self.speed = 500
+	self.speed = 300
 	self.density = 150
 	self.y_velocity = 0
 	self.x_velocity = 0
@@ -53,19 +53,15 @@ function Player:initialize(pos)
 
 	--jumping animations
 	self.animations['jumping-left'] = {}
-	self.animations['jumping-left'].behaviour = 'once'
-	self.animations['jumping-left'].frameInterval = 0.15
 	self.animations['jumping-left'].quads = {
-		love.graphics.newQuad(200,700,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(200,800,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+		love.graphics.newQuad(200,700,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+
 	}
 
 	self.animations['jumping-right'] = {}
-	self.animations['jumping-right'].behaviour = 'once'
-	self.animations['jumping-right'].frameInterval = 0.15
+
 	self.animations['jumping-right'].quads = {
-		love.graphics.newQuad(300,700,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(300,800,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+		love.graphics.newQuad(300,700,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
 	}
 
 	--running animations
@@ -103,7 +99,12 @@ function Player:initialize(pos)
 	self.shape = love.physics.newRectangleShape(self.height, self.width)
 	self.body:setFixedRotation(true)
 	self.fixture = love.physics.newFixture(self.body, 
-						self.shape, self.density)
+						self.shape, 1)
+						
+	self.body:setGravityScale(6.5)	
+	self.fixture:setRestitution(0.2)
+	self.body:setFixedRotation(true)
+	self.body:setLinearDamping(4)	
 
 	--imaging
 	-------------------------------------------------------------------
@@ -166,20 +167,16 @@ end
 
 	--NOTE: y is downwards positive
 function Player:moveUp(dt,vely)
-print(self.jump_stamina)
+--print(self.jump_stamina)
 	if self.jump_stamina >= 0 and vely <= 0 and vely >= -self.speed then
-		self.body:applyLinearImpulse(0,-self.jump_height*10)
+		self.body:applyLinearImpulse(0,-self.speed*3)
 		self:setOrientation('jumping')
-		self.jump_stamina = self.jump_stamina - .02
+		self.jump_stamina = self.jump_stamina - 0.5
 	end
 end
 
 function Player:moveDown(dt)
-	if string.find(self.state,'left') ~= nil then
-		self:setState('crouching-left')
-	else
-		self:setState('crouching-right')
-	end
+	self:setOrientation('crouching')
 end
 
 function Player:setPos(x, y)
@@ -187,10 +184,17 @@ function Player:setPos(x, y)
 end
 
 function Player:handle_animation(dt)
-	if string.find(self.state,'running') ~= nil and self.body:getLinearVelocity() == 0 then
+	local xvel, yvel = self.body:getLinearVelocity()
+	--print('xvel='..xvel..', yvel='..yvel)
+	local jumping = string.find(self.state,'jumping')
+	if xvel == 0 and yvel == 0 and string.find(self.state, 'crouching') == nil then
 		self:setOrientation('standing')
+	elseif jumping == nil and yvel < -20 or yvel > 20 then 
+		self:setOrientation('jumping')
 	end
-
+	if (yvel >= -1 and yvel <= 5) and self.jump_stamina ~= 1 then -- we hit the ground again
+		self.jump_stamina = 1
+	end
 	if self.animations[self.state].behaviour == nil then
 		self:update_animation(dt)
 	else --we have a behaviour -- so far will only be 'once' [loop only once]
@@ -233,16 +237,6 @@ end
 
 --update data
 function Player:update_position(dt)
-	local xvel,yvel = self.body:getLinearVelocity()
-	if string.find(self.state,'jumping') ~= nil and yvel == 0 then 
-		self:setOrientation('standing')
-	end
-	if string.find(self.state,'jumping') == nil and yvel < -20 then 
-		self:setOrientation('jumping')
-	end
-	if (yvel >= -1 and yvel <= 5) and self.jump_stamina ~= 1 then -- we hit the ground again
-		self.jump_stamina = 1
-	end
 	--gets the collider coordinates and calcs the image start location
 	self.col_x, self.col_y = self.body:getWorldPoints(x1, y1, x2, y2)
 	self.image_x = self.col_x - self.drawnOffsetX
@@ -273,7 +267,7 @@ function Player:draw()
 						0)
 	--hitbox
     love.graphics.setColor(50, 50, 50)
-    love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
+    --love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
 end
 
 --update function(s)

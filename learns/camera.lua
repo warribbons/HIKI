@@ -1,3 +1,4 @@
+--hello
 camera = {}
 camera._x = 0
 camera._y = 0
