@@ -1,4 +1,6 @@
 require '../libraries/vector'
+require '../libraries/middleclass'
+
 Player = class('Player')
 
 function Player:initialize(pos)
@@ -96,12 +98,14 @@ function Player:initialize(pos)
 	--physics
 	-------------------------------------------------------------------
 	self.body = love.physics.newBody(world, pos.x, pos.y, "dynamic")
-	self.shape = love.physics.newRectangleShape(self.height, self.width)
-	self.body:setFixedRotation(true)
+	self.shape = love.physics.newCircleShape(self.height/2)
+	
+	--self.body:setFixedRotation(true)
 	self.fixture = love.physics.newFixture(self.body, 
 						self.shape, 1)
+	--self.fixture:setFriction(0)
 						
-	self.body:setGravityScale(6.5)	
+	self.body:setGravityScale(10)	
 	self.fixture:setRestitution(0.2)
 	self.body:setFixedRotation(true)
 	self.body:setLinearDamping(4)	
@@ -171,7 +175,7 @@ function Player:moveUp(dt,vely)
 	if self.jump_stamina >= 0 and vely <= 0 and vely >= -self.speed then
 		self.body:applyLinearImpulse(0,-self.speed*3)
 		self:setOrientation('jumping')
-		self.jump_stamina = self.jump_stamina - 0.5
+		self.jump_stamina = self.jump_stamina - 1
 	end
 end
 

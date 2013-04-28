@@ -13,19 +13,41 @@ lvl1.test = ''
 function lvl1.enter(self, pre)
 	--gets called at the beggining of the program, initialize shit
 	--the current key on the screen
-
 	--physics initialization
+	    love.graphics.setBackgroundColor(45, 45, 45)
 	love.physics.setMeter(64) --set a meter to be 64px
 	
 	world = love.physics.newWorld(0, 9.81*64, true) --creates a world
+	
+	-- Load up the map
+    loader = require("AdvTiledLoader.Loader")
+    loader.path = "maps/"
+    map = loader.load("map01.tmx")
+    map:setDrawRange(0, 0, map.width * map.tileWidth, map.height * map.tileHeight)
+		
+	--lvl1.ground = Ground()
+
 	lvl1.keypress = "current key pressed"
 
-	lvl1.player = Player(vector(100,575))
+	lvl1.player = Player(vector(100,800))
 	lvl1.player:setState('standing-center')
-	
-	lvl1.ground = Ground()
+	collision_objs = {}
+	for x, y, tile in map("Walls"):iterate() do
+      if tile and tile.properties.isSolid == true then
+      	obj = {}
+      	print(x)
+		obj.body = love.physics.newBody(world, (x*map.tileWidth)+map.tileHeight-15, (y*map.tileHeight)+map.tileHeight-15,'static')
+		obj.shape = love.physics.newRectangleShape(map.tileWidth,map.tileHeight)
+		obj.fixture = love.physics.newFixture(obj.body, obj.shape)
+		obj.fixture:setRestitution(.2)
+		--obj.fixture:setFriction(0)
+		table.insert(collision_objs,obj)
+		--love.graphics.setColor(255, 255, 50)
+		--print(obj.body:getWorldPoints(obj.shape:getPoints())) 
+      end
+   	end
 	-- restrict the camera
-    camera:setBounds(0, 0, 99999, math.floor(love.graphics.getHeight() / 8))
+    camera:setBounds(0, 0, 99999, math.floor(love.graphics.getHeight()))
 	
 	lvl1.enemies = {}
 
@@ -49,7 +71,7 @@ end
 
 function lvl1.spawnEnemy(self)
 	local playerloc =  math.floor(self.player.body:getX())
-	local zomb = Zombie(vector(math.random(playerloc,playerloc+1000),555),zombieSprites.animations)
+	local zomb = Zombie(vector(math.random(playerloc,playerloc+1000),200),zombieSprites.animations)
 	table.insert(self.enemies, zomb)
 end
 
@@ -57,12 +79,11 @@ end
 function lvl1.update(self, dt)
 	--gets called often
 	--dt is the delta time from the last update
-
 	world:update(dt) --this puts the world into motion
 
 	self.player:update(dt)
 
-	if #self.enemies ~= 10 then
+	if #self.enemies ~= 100 then
 		self:spawnEnemy(self)
 	end
 	for i, zomb in ipairs(self.enemies) do
@@ -88,8 +109,8 @@ function lvl1.draw(self)
 		r, g, b, a = love.graphics.getColor()
 
 		--draw player
-
-			self.player:draw()
+		map:draw()
+		self.player:draw()
 
 
 		--draw zombie
@@ -102,7 +123,7 @@ function lvl1.draw(self)
 			end
 		--draw ground
 		love.graphics.setColor(50, 50, 50)
-		love.graphics.polygon("line", self.ground.body:getWorldPoints(self.ground.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
+		--love.graphics.polygon("line", self.ground.body:getWorldPoints(self.ground.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
 
 		--set back to default colour
 		love.graphics.setColor(r, g, b, a)

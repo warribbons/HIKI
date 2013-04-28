@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="35" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32">
+  <image source="maptiles.png" trans="ffffff" width="64" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="isSolid" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Walls" width="50" height="35">
+  <properties>
+   <property name="" value=""/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztl8ENwCAMA8P+S3eEqhDHV+ST+MY5RASsqlqXrL8TDxbxYBEPFvFgEQ8W8WARDxbdHq4/gTprysmxZ4o8x3y8Ze6cTdqc7/ZC8jjpg+Jx2gPBoyPf7dGV7fRQ3L/TdGe67g9FzUkPVdb0u0RZe8JDnRGP7znq+jd53LAeSuoAyA==
+  </data>
+ </layer>
+ <objectgroup color="#ff557f" name="Object Layer 1" width="50" height="35">
+  <object x="602" y="652">
+   <polyline points="0,0 -43,163 2,-1 72,20 -1,0 -17,69 44,88 -20,71"/>
+  </object>
+  <object x="703" y="681">
+   <polyline points="0,0 -36,103 -21,152 36,165 69,133 97,28"/>
+  </object>
+  <object x="926" y="740">
+   <polyline points="0,0 -84,-3 -104,52 -95,117 -33,134"/>
+  </object>
+  <object x="981" y="746">
+   <polyline points="0,0 -39,142 -16,67 21,143 -15,65 62,23"/>
+  </object>
+ </objectgroup>
+</map>

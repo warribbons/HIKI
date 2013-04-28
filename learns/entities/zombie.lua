@@ -1,3 +1,4 @@
+require '../libraries/middleclass'
 Zombie = class('Zombie')
 
 function Zombie:initialize(pos,animations)
@@ -10,7 +11,7 @@ function Zombie:initialize(pos,animations)
 	self.height = 65
 	self.width = 30
 	self.state = 'risen'
-	self.scale = 1.5
+	self.scale = 1
 	self.gravity = 400
 	self.jump_height = 5
 	-- quads, animation frames
@@ -24,9 +25,10 @@ function Zombie:initialize(pos,animations)
 	-------------------------------------------------------------------
 	self.body = love.physics.newBody(world, pos.x, pos.y, "dynamic")
 	self.body:setFixedRotation(true)
-	self.shape = love.physics.newRectangleShape(35, 90)
+	self.shape = love.physics.newCircleShape(self.width/2)
 	self.fixture = love.physics.newFixture(self.body, 
 						self.shape, self.density)
+	self.fixture:setRestitution(0.2)
 
 
 
@@ -162,7 +164,7 @@ function Zombie:draw()
 						1.5,
 						1.5,
 						-5,
-						-10)
+						-5)
 
 	--hitbox
    		 love.graphics.setColor(50, 50, 50)
