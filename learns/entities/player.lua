@@ -40,7 +40,6 @@ function Player:initialize(pos)
 		love.graphics.newQuad(0,300,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
 		love.graphics.newQuad(0,400,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
 		love.graphics.newQuad(0,500,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
-		love.graphics.newQuad(0,600,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
 		love.graphics.newQuad(0,600,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
 	}
 	
@@ -222,7 +221,7 @@ function Player:handle_animation(dt)
 		self:update_animation(dt)
 	else --we have a behaviour -- so far will only be 'once' [loop only once]
 		if self.animation.elapsed ~= 0 or 
-		self.animation.frame + 1 > #self.animations[self.state].quads  then
+		self.animation.frame < #self.animations[self.state].quads  then
 			self:update_animation(dt)
 		end
 	end
