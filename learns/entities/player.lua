@@ -30,6 +30,20 @@ function Player:initialize(pos)
 	self.animations = {}
 
 	--static animations
+	self.animations['dead'] = {}
+	self.animations['dead'].frameInterval = .2
+	self.animations['dead'].behaviour = 'once'
+	self.animations['dead'].quads = {
+		love.graphics.newQuad(0,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(0,100,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(0,200,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(0,300,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(0,400,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(0,500,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(0,600,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight()),
+		love.graphics.newQuad(0,600,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
+	}
+	
 	self.animations['standing-center'] = {}
 	self.animations['standing-center'].quads = {
 		love.graphics.newQuad(0,0,self.tileSizeX,self.tileSizeY,self.image:getWidth(), self.image:getHeight())
@@ -111,7 +125,7 @@ function Player:initialize(pos)
 	self.body:setGravityScale(10)	
 	self.fixture:setRestitution(0.2)
 	self.body:setFixedRotation(true)
-	self.body:setLinearDamping(4)	
+	self.body:setLinearDamping(4)
 
 	--imaging
 	-------------------------------------------------------------------
@@ -193,14 +207,16 @@ end
 function Player:handle_animation(dt)
 	local xvel, yvel = self.body:getLinearVelocity()
 	--print('xvel='..xvel..', yvel='..yvel)
-	local jumping = string.find(self.state,'jumping')
-	if xvel == 0 and yvel == 0 and string.find(self.state, 'crouching') == nil then
-		self:setOrientation('standing')
-	elseif jumping == nil and yvel < -20 or yvel > 20 then 
-		self:setOrientation('jumping')
-	end
-	if (yvel >= -1 and yvel <= 5) and self.jump_stamina ~= 1 then -- we hit the ground again
-		self.jump_stamina = 1
+	if self.state ~= 'dead' then
+		local jumping = string.find(self.state,'jumping')
+		if xvel >= -10 and xvel <= 10 and yvel >= -10 and yvel <= 10 and string.find(self.state, 'crouching') == nil then
+			self:setOrientation('standing')
+		elseif jumping == nil and yvel < -20 or yvel > 20 then 
+			self:setOrientation('jumping')
+		end
+		if (yvel >= -1 and yvel <= 5) and self.jump_stamina ~= 1 then -- we hit the ground again
+			self.jump_stamina = 1
+		end
 	end
 	if self.animations[self.state].behaviour == nil then
 		self:update_animation(dt)
@@ -283,14 +299,19 @@ end
 
 --function updates everything that is needed
 function Player:update(dt)
-	self:getKeyPress(dt)
-	self:update_position(dt)
-	self:handle_animation(dt)
-	if (self.invulnTime >= 1) then
-		self.invulnTime = self.invulnTime + dt
-		if self.invulnTime >= 2 then
-			self.invulnTime = 0
+	if self:die() then
+		self:getKeyPress(dt)
+		self:update_position(dt)
+		self:handle_animation(dt)
+		if (self.invulnTime >= 1) then
+			self.invulnTime = self.invulnTime + dt
+			if self.invulnTime >= 2 then
+				self.invulnTime = 0
+			end
 		end
+	else
+		self:update_position(dt)
+		self:handle_animation(dt)
 	end
 end
 
@@ -305,5 +326,17 @@ function Player:damage(dmg, pos)
 		else
 			self.body:applyLinearImpulse(self.speed*2, 0)
 		end
+		if self.health == 0 then
+			self.state = 'dead'
+		end
 	end
 end
+
+function Player:die()
+	if (self.health ~= 0 and self.state ~= 'dead') then
+		return true
+	else
+		return false
+	end
+end
+	

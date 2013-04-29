@@ -68,7 +68,7 @@ function debugLvl.update(self, dt)
 
 	self.player:update(dt)
 
-	if #self.enemies ~= 1 then
+	if #self.enemies ~= 2 then
 		self:spawnEnemy(self)
 	end
 	for i, zomb in ipairs(self.enemies) do

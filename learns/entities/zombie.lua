@@ -141,7 +141,6 @@ function Zombie:update_position(dt,pos)
 		self.col_x, self.col_y = self.body:getWorldPoints(x1, y1, x2, y2)
 		self.image_x = self.col_x - self.drawnOffsetX
 		self.image_y = self.col_y - self.drawnOffsetY
-
 end
 
 function Zombie:setOrientation(action)
