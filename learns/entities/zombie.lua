@@ -6,6 +6,9 @@ function Zombie:initialize(pos,animations)
 	-------------------------------------------------------------------
 	self.speed = 100
 	self.density = 80
+
+	self.damage = 10
+	self.name = "zombie"
 	--image
 	self.image = love.graphics.newImage("characters/zombie.png")
 	self.height = 65
@@ -30,7 +33,7 @@ function Zombie:initialize(pos,animations)
 						self.shape, self.density)
 	self.fixture:setRestitution(0.2)
 
-
+	self.fixture:setUserData("zombie")
 
 	--imaging
 	-------------------------------------------------------------------
@@ -167,7 +170,9 @@ function Zombie:draw()
 						-5)
 
 	--hitbox
-   		 love.graphics.setColor(50, 50, 50)
+   		love.graphics.setColor(50, 50, 50)
+   		love.graphics.setColor(255, 255, 255)
+   		love.graphics.circle("line", self.body:getX(), self.body:getY(), self.shape:getRadius())
 		--love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) 
 
 end

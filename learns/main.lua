@@ -2,7 +2,7 @@ require 'libraries/middleclass'
 require 'libraries/middleclass-extras'
 require 'libraries/gamestate'
 require 'scenes/scene_lvl1'
-
+require 'scenes/scene_debug'
 
 function love.load()
 	love.graphics.setCaption('Testing')

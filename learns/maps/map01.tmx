@@ -9,9 +9,9 @@
   </tile>
  </tileset>
  <layer name="Walls" width="50" height="35">
-  <properties>
-   <property name="" value=""/>
-  </properties>
+   <properties>
+    <property name="isSolid" value="true"/>
+   </properties>
   <data encoding="base64" compression="zlib">
    eJztl8ENwCAMA8P+S3eEqhDHV+ST+MY5RASsqlqXrL8TDxbxYBEPFvFgEQ8W8WARDxbdHq4/gTprysmxZ4o8x3y8Ze6cTdqc7/ZC8jjpg+Jx2gPBoyPf7dGV7fRQ3L/TdGe67g9FzUkPVdb0u0RZe8JDnRGP7znq+jd53LAeSuoAyA==
   </data>

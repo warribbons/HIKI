@@ -11,6 +11,7 @@ function Player:initialize(pos)
 	self.density = 150
 	self.y_velocity = 0
 	self.x_velocity = 0
+
 	--image
 	self.image = love.graphics.newImage("characters/player.png")
 	
@@ -105,6 +106,7 @@ function Player:initialize(pos)
 						self.shape, 1)
 	--self.fixture:setFriction(0)
 						
+	self.fixture:setUserData("player")
 	self.body:setGravityScale(10)	
 	self.fixture:setRestitution(0.2)
 	self.body:setFixedRotation(true)
@@ -252,11 +254,11 @@ function Player:setOrientation(action)
 		self:setState(action..'-left')
 	else
 		self:setState(action..'-right')
-	end
+	end 
 end
 
 --draw function(s)
-
+-------------------------------------------------------------------
 --function draws the images and hitboxes
 function Player:draw()
 	--animation/image
@@ -270,15 +272,24 @@ function Player:draw()
 						0,
 						0)
 	--hitbox
-    love.graphics.setColor(50, 50, 50)
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.circle("line", self.body:getX(), self.body:getY(), self.shape:getRadius())
     --love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
 end
 
 --update function(s)
+-------------------------------------------------------------------
 
 --function updates everything that is needed
 function Player:update(dt)
 	self:getKeyPress(dt)
 	self:update_position(dt)
 	self:handle_animation(dt)
+end
+
+--attribute functions
+-------------------------------------------------------------------
+function Player:damage(dmg)
+	print("damage: " .. dmg)
+	self.health = self.health - dmg
 end
