@@ -11,6 +11,7 @@ function Player:initialize(pos)
 	self.density = 150
 	self.y_velocity = 0
 	self.x_velocity = 0
+	self.invulnTime = 0
 
 	--image
 	self.image = love.graphics.newImage("characters/player.png")
@@ -285,11 +286,24 @@ function Player:update(dt)
 	self:getKeyPress(dt)
 	self:update_position(dt)
 	self:handle_animation(dt)
+	if (self.invulnTime >= 1) then
+		self.invulnTime = self.invulnTime + dt
+		if self.invulnTime >= 2 then
+			self.invulnTime = 0
+		end
+	end
 end
 
 --attribute functions
 -------------------------------------------------------------------
-function Player:damage(dmg)
-	print("damage: " .. dmg)
-	self.health = self.health - dmg
+function Player:damage(dmg, pos)
+	if (self.invulnTime == 0) then
+		self.health = self.health - dmg
+		self.invulnTime = 1
+		if (pos > self.body:getX()) then
+			self.body:applyLinearImpulse(-self.speed*2, 0)
+		else
+			self.body:applyLinearImpulse(self.speed*2, 0)
+		end
+	end
 end

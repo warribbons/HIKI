@@ -25,7 +25,6 @@ function debugLvl.enter(self, pre)
     loader.path = "maps/"
     map = loader.load("debug.tmx")
     map:setDrawRange(0, 0, map.width * map.tileWidth, map.height * map.tileHeight)
-		
 	--debugLvl.ground = Ground()
 
 	debugLvl.keypress = "current key pressed"
@@ -83,6 +82,7 @@ function debugLvl.update(self, dt)
 			--print('number of enemies='..#self.enemies..' distance apart='..math.abs(zomb.col_x - self.player.body:getX()) )
 		end
 	end
+	
 	--debugLvl.zombie:update(dt)
 	--mouseX, mouseY = control:getMouseLocation()
 	camera:setPosition(math.floor(self.player.body:getX() - love.graphics.getWidth() / 2), 
@@ -148,12 +148,12 @@ end
 ------------------------------------------------------------------
 function debugLvl.beginContact ( a, b, coll )
 	--print(a:getUserData() .. " " .. b:getUserData() )
-	if(a:getUserData() == "player" and b:getUserData() == "zombie") then
-		for i, zomb in ipairs(debugLvl.enemies) do
-			debugLvl.player:damage(zomb.damage)
-			break;
+		if(a:getUserData() == "player" and b:getUserData() == "zombie") then
+			for i, zomb in ipairs(debugLvl.enemies) do
+				debugLvl.player:damage(zomb.damage, zomb.body:getX())
+				break;
+			end
 		end
-	end
 end 
 
 function  debugLvl.endContact ( a, b, coll )
