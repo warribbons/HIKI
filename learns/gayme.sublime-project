@@ -2,7 +2,8 @@
 	"folders":
 	[
 		{
-			"path": "/C/Users/Catharsis/Documents/GitHub/HIKI/learns"
+			"follow_symlinks": true,
+			"path": "C:\\Users\\nicholas.phongsavath\\Documents\\GitHub\\HIKI\\learns"
 		}
 	]
 }

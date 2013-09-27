@@ -10,7 +10,7 @@ function Zombie:initialize(pos,animations)
 	self.damage = 10
 	self.name = "zombie"
 	--image
-	self.image = love.graphics.newImage("characters/zombie.png")
+	self.image = love.graphics.newImage("sprites/characters/zombie.png")
 	self.height = 65
 	self.width = 30
 	self.state = 'risen'

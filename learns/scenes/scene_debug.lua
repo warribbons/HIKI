@@ -57,7 +57,7 @@ end
 
 function debugLvl.spawnEnemy(self)
 	local playerloc =  math.floor(self.player.body:getX())
-	local zomb = Zombie(vector(math.random(playerloc,playerloc+100),200),zombieSprites.animations)
+	--local zomb = Zombie(vector(math.random(playerloc,playerloc+100),200),zombieSprites.animations)
 	table.insert(self.enemies, zomb)
 end
 

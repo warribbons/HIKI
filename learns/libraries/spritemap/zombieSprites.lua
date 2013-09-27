@@ -2,7 +2,7 @@
 	zombieSprites = {}
 	zombieSprites.tileSizeX = 30
 	zombieSprites.tileSizeY = 65
-	zombieSprites.image = love.graphics.newImage("characters/zombie.png")
+	zombieSprites.image = love.graphics.newImage("sprites/characters/zombie.png")
 	zombieSprites.animations = {}
 	zombieSprites.animations['risen'] = {}
 	zombieSprites.animations['risen'].behaviour = 'once'

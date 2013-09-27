@@ -20,6 +20,11 @@ function control:getKeyPress(dt)
 		player:moveDown(dt)
 	end
 
+	--attack input
+	if love.keyboard.isDown("space") then
+		self:attack(dt)
+	end
+	
 	--debug functions
 	if love.keyboard.isDown("r") then 
 		player:setPos(800/2, 650/2)

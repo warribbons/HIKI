@@ -1,6 +1,6 @@
 require '../libraries/vector'
 require '../libraries/middleclass'
-
+require '../libraries/attack/attackInterface'
 Player = class('Player')
 
 function Player:initialize(pos)
@@ -14,12 +14,15 @@ function Player:initialize(pos)
 	self.invulnTime = 0
 
 	--image
-	self.image = love.graphics.newImage("characters/player.png")
+	self.image = love.graphics.newImage("sprites/characters/player.png")
 	
+	--jump
 	self.gravity = 900
 	self.jump_height = 500
 	self.jump_stamina = 1
 
+	--attack
+	self.playerAttack = Attack()
 	-- quads, animation frames
 	-------------------------------------------------------------------
 	self.tileSizeX = 100
@@ -154,15 +157,23 @@ function Player:getKeyPress(dt)
 	--get the keypresses from the keyboard
 	local currentKeyPress = "no key down"
 	local velx, vely = self.body:getLinearVelocity()
+    
+    --movement input
     if love.keyboard.isDown("left") then
 		self:moveLeft(dt,velx)
  	elseif love.keyboard.isDown("right") then
 		self:moveRight(dt,velx)	
 	end
+
 	if love.keyboard.isDown("up") then
 		self:moveUp(dt,vely)
  	elseif love.keyboard.isDown("down") then
 		self:moveDown(dt)
+	end
+
+	--attack input
+	if love.keyboard.isDown("z") then
+		self:attack(dt)
 	end
 
 	--debug functions
@@ -183,6 +194,11 @@ function Player:moveRight(dt,velx)
 		self.body:applyForce(self.speed*250, 0)
 		self:setState('running-right')
 	end
+end
+
+function Player:attack(dt)
+	self.playerAttack:initiateProjectile(self.col_x, self.col_y,
+										self.height, self.width, self.state)
 end
 
 	--NOTE: y is downwards positive

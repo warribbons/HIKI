@@ -15,7 +15,8 @@ function UserInterface:draw(x, y, player)
 	love.graphics.rectangle("fill", self.pos_x, self.pos_y, 800, 50)
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.print("Health: " .. player.health, self.pos_x, self.pos_y)
-	love.graphics.setColor(255, 255, 255)
-	love.graphics.printf("State: " .. player.state,self.pos_x,self.pos_y+35, 1500, 'left')
+	love.graphics.printf("State: " .. player.state,self.pos_x,self.pos_y+12, 1500, 'left')
+	love.graphics.printf("Mouse_x: " .. love.mouse.getX() .. " Mouse_y: " .. love.mouse.getY(),
+						self.pos_x, self.pos_y+24, 1500, 'left')
 end
 

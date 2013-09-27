@@ -4,76 +4,31 @@
 		"selected_items":
 		[
 			[
-				"enemy",
-				"enemy"
+				"attack",
+				"attack_timer_start"
 			],
 			[
-				"en",
-				"enemies"
+				"attac",
+				"attack_timer_delta"
 			],
 			[
-				"til",
-				"tileSizeY"
+				"attack_",
+				"attack_timer_current"
 			],
 			[
-				"tile",
-				"tileSizeX"
-			],
-			[
-				"ti",
-				"tileSizeX"
-			],
-			[
-				"drw",
-				"drawnOffsetY"
-			],
-			[
-				"drawn",
-				"drawnOffsetX"
+				"key",
+				"keyboard"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "camera.lua",
+			"file": "libraries/attack/attackInterface.lua",
 			"settings":
 			{
-				"buffer_size": 1417,
+				"buffer_size": 965,
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "entities/player.lua",
-			"settings":
-			{
-				"buffer_size": 8995,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "libraries/controls.lua",
-			"settings":
-			{
-				"buffer_size": 890,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "scenes/scene_lvl1.lua",
-			"settings":
-			{
-				"buffer_size": 3913,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "scenes/scene_debug.lua",
-			"settings":
-			{
-				"buffer_size": 3939,
-				"line_ending": "Windows",
-				"name": "--scene_debug"
 			}
 		},
 		{
@@ -85,26 +40,43 @@
 			}
 		},
 		{
-			"file": "libraries/gamestate.lua",
+			"file": "libraries/attack/weapons/basicWeapon.lua",
 			"settings":
 			{
-				"buffer_size": 3504,
+				"buffer_size": 100,
+				"line_ending": "Windows",
+				"name": "--basicWeapon.lua"
+			}
+		},
+		{
+			"file": "entities/player.lua",
+			"settings":
+			{
+				"buffer_size": 11374,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "maps/debug.tmx",
+			"file": "scenes/scene_debug.lua",
 			"settings":
 			{
-				"buffer_size": 533,
-				"line_ending": "Unix"
+				"buffer_size": 4839,
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "maps/map01.tmx",
+			"file": "UserInterface.lua",
 			"settings":
 			{
-				"buffer_size": 1259,
+				"buffer_size": 589,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "entities/zombie.lua",
+			"settings":
+			{
+				"buffer_size": 5032,
 				"line_ending": "Windows"
 			}
 		}
@@ -120,7 +92,10 @@
 	},
 	"console":
 	{
-		"height": 0.0
+		"height": 0.0,
+		"history":
+		[
+		]
 	},
 	"distraction_free":
 	{
@@ -133,70 +108,14 @@
 	},
 	"file_history":
 	[
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/characters/player.png",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/entities/player.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/scenes/scene_lvl1.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/conf.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/controls.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/main.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/scene_lvl1.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/vector.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/entities/ground.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/gamestate.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/middleclass.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/entities/zombie.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/entities/weapons.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/libraries/gamestate.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/ground.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/player.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/weapons.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/zombie.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/middleclass-extras/README.textile",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/controls.love",
-		"/C/Users/Catharsis/Documents/GitHub/pacpac/pacpac/util.lua",
-		"/C/Users/Catharsis/Documents/GitHub/pacpac/pacpac/draw.lua",
-		"/C/Users/Catharsis/Documents/GitHub/pacpac/pacpac/events.lua",
-		"/C/Users/Catharsis/Documents/GitHub/pacpac/pacpac/graphics.lua",
-		"/C/Users/Catharsis/Documents/GitHub/pacpac/pacpac/levelreader.lua",
-		"/C/Users/Catharsis/Documents/GitHub/pacpac/pacpac/Character.lua",
-		"/C/Users/Catharsis/Documents/GitHub/pacpac/pacpac/conf.lua",
-		"/C/Users/Catharsis/Documents/GitHub/pacpac/pacpac/main.lua",
-		"/C/Users/Catharsis/Documents/GitHub/pacpac/pacpac/notes.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/enemies.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/test.love",
-		"/C/Program Files (x86)/LOVE/examples/e0010.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0100.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0002.lua",
-		"/C/Program Files (x86)/LOVE/examples/main.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/maybe some useful shit/physicstutorial/main.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/characters.lua",
-		"/C/Users/Catharsis/Documents/GitHub/HIKI/learns/play.bat",
-		"/C/Program Files (x86)/LOVE/learns/main.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0014.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0005.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0004.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0003.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0001.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0053.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0101.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0102.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0103.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0104.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0105.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0006.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0007.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0008.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0009.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0011.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0013.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0015.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0016.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0051.lua",
-		"/C/Program Files (x86)/LOVE/examples/e0052.lua"
+		"/C/Users/nicholas.phongsavath/Documents/GitHub/HIKI/learns/libraries/spritemap/zombieSprites.lua",
+		"/C/Users/nicholas.phongsavath/Documents/GitHub/HIKI/learns/libraries/weapons/weaponsInterface.lua",
+		"/C/Users/nicholas.phongsavath/Documents/GitHub/HIKI/timertest.lua",
+		"/C/Users/nicholas.phongsavath/Documents/GitHub/HIKI/learns/controls.lua"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 43.0
 	},
 	"find_in_files":
 	{
@@ -210,68 +129,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"lvl1",
-			"vector",
-			";../entities/",
-			"entities",
-			"ump_height",
-			"spawn",
-			"gravity",
-			"tileSizeY",
-			"tileSizeX",
-			"jump_height",
-			"gravity",
-			"right",
-			"?",
-			"standing",
-			"left",
-			"width",
-			"tileSizeY",
-			"tileSizeX",
-			"jump_height",
-			"gravity",
-			"ball.body",
-			"ball",
-			"player.col_x",
-			"player.col_y",
-			"player.col_y1",
-			"player.col_x1",
-			"player.y1",
-			"player.x1",
-			"player.y",
-			"player.",
-			"player.x",
-			"	",
-			"drawnOffset",
-			"	",
-			"this",
-			"control:",
-			"control",
-			"		",
-			"move",
-			"dRight",
-			"move",
-			"done",
-			"list.",
-			"currentKeyPress",
-			"		",
-			"	 	",
-			"			",
-			"		",
-			"	",
-			"\"",
-			")",
-			"love.keyboard.isDown(",
-			"keypress",
-			"currentKeypress",
-			"love.keyboard.isDown(",
-			"currentKeypress",
-			"currentKeyPress",
-			"currentKeypress",
-			"keypress",
-			"else if",
-			"    if ",
-			"   end"
+			"UI",
+			"attack",
+			"z",
+			"character",
+			"chara",
+			"characters/",
+			"control"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -289,30 +153,29 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "camera.lua",
+					"file": "libraries/attack/attackInterface.lua",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1417,
+						"buffer_size": 965,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								402,
+								402
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Lua/Lua.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -322,115 +185,8 @@
 				},
 				{
 					"buffer": 1,
-					"file": "entities/player.lua",
-					"settings":
-					{
-						"buffer_size": 8995,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2430.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "libraries/controls.lua",
-					"settings":
-					{
-						"buffer_size": 890,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								659,
-								659
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "scenes/scene_lvl1.lua",
-					"settings":
-					{
-						"buffer_size": 3913,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1048,
-								1044
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 270.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "scenes/scene_debug.lua",
-					"settings":
-					{
-						"buffer_size": 3939,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2915,
-								2915
-							]
-						],
-						"settings":
-						{
-							"auto_name": "--scene_debug",
-							"syntax": "Packages/Lua/Lua.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 270.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
 					"file": "main.lua",
+					"semi_transient": true,
 					"settings":
 					{
 						"buffer_size": 468,
@@ -440,8 +196,8 @@
 						"selection":
 						[
 							[
-								431,
-								431
+								0,
+								0
 							]
 						],
 						"settings":
@@ -455,19 +211,54 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "libraries/gamestate.lua",
+					"buffer": 2,
+					"file": "libraries/attack/weapons/basicWeapon.lua",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3504,
+						"buffer_size": 100,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								76,
+								76
+							]
+						],
+						"settings":
+						{
+							"auto_name": "--basicWeapon.lua",
+							"syntax": "Packages/Lua/Lua.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "entities/player.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11374,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9432,
+								9432
 							]
 						],
 						"settings":
@@ -476,36 +267,32 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 630.0,
+						"translation.y": 4860.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
+				},
 				{
-					"buffer": 7,
-					"file": "maps/debug.tmx",
+					"buffer": 4,
+					"file": "scenes/scene_debug.lua",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 533,
+						"buffer_size": 4839,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								264,
-								264
+								108,
+								110
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -514,26 +301,54 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "maps/map01.tmx",
+					"buffer": 5,
+					"file": "UserInterface.lua",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1259,
+						"buffer_size": 589,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								391,
-								391
+								589,
+								589
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "entities/zombie.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5032,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								458,
+								458
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -550,7 +365,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 38.0
 	},
 	"layout":
 	{
@@ -572,7 +387,7 @@
 		"cols":
 		[
 			0.0,
-			0.515107913669,
+			0.355704243806,
 			1.0
 		],
 		"rows":
@@ -582,6 +397,7 @@
 		]
 	},
 	"menu_visible": true,
+	"project": "gayme.sublime-project",
 	"replace":
 	{
 		"height": 0.0
@@ -603,10 +419,24 @@
 		],
 		"width": 0.0
 	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 50.0,
-	"status_bar_visible": true
+	"side_bar_width": 424.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }
