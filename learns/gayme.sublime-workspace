@@ -27,15 +27,15 @@
 			"file": "libraries/attack/attackInterface.lua",
 			"settings":
 			{
-				"buffer_size": 965,
+				"buffer_size": 2360,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "main.lua",
+			"file": "scenes/scene_lvl1.lua",
 			"settings":
 			{
-				"buffer_size": 468,
+				"buffer_size": 3921,
 				"line_ending": "Windows"
 			}
 		},
@@ -49,18 +49,10 @@
 			}
 		},
 		{
-			"file": "entities/player.lua",
-			"settings":
-			{
-				"buffer_size": 11374,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "scenes/scene_debug.lua",
 			"settings":
 			{
-				"buffer_size": 4839,
+				"buffer_size": 4848,
 				"line_ending": "Windows"
 			}
 		},
@@ -68,7 +60,7 @@
 			"file": "UserInterface.lua",
 			"settings":
 			{
-				"buffer_size": 589,
+				"buffer_size": 690,
 				"line_ending": "Windows"
 			}
 		},
@@ -129,6 +121,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"p",
+			"--",
+			"ove.graphics.setColor(255, 255, 255)\n			l",
+			"attack",
+			"state",
+			"setState",
+			"self.col_",
+			"attack",
 			"UI",
 			"attack",
 			"z",
@@ -162,50 +162,52 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 965,
+						"buffer_size": 2360,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								402,
-								402
+								1974,
+								1974
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua/Lua.tmLanguage"
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1020.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "main.lua",
+					"file": "scenes/scene_lvl1.lua",
 					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 468,
+						"buffer_size": 3921,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								3309,
+								3309
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua/Lua.tmLanguage"
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1980.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -241,24 +243,24 @@
 			]
 		},
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 3,
-					"file": "entities/player.lua",
+					"file": "scenes/scene_debug.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11374,
+						"buffer_size": 4848,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9432,
-								9432
+								992,
+								992
 							]
 						],
 						"settings":
@@ -267,26 +269,26 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4860.0,
+						"translation.y": 1020.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "scenes/scene_debug.lua",
+					"file": "UserInterface.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4839,
+						"buffer_size": 690,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								108,
-								110
+								667,
+								667
 							]
 						],
 						"settings":
@@ -302,34 +304,6 @@
 				},
 				{
 					"buffer": 5,
-					"file": "UserInterface.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 589,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								589,
-								589
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
 					"file": "entities/zombie.lua",
 					"semi_transient": false,
 					"settings":
@@ -341,8 +315,8 @@
 						"selection":
 						[
 							[
-								458,
-								458
+								1482,
+								1482
 							]
 						],
 						"settings":
@@ -387,7 +361,7 @@
 		"cols":
 		[
 			0.0,
-			0.355704243806,
+			0.452188038263,
 			1.0
 		],
 		"rows":
@@ -434,7 +408,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 424.0,
+	"side_bar_width": 63.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

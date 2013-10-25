@@ -71,6 +71,7 @@ function debugLvl.update(self, dt)
 	if #self.enemies ~= 2 then
 		self:spawnEnemy(self)
 	end
+	
 	for i, zomb in ipairs(self.enemies) do
 		if math.abs(zomb.col_x - self.player.body:getX()) < 1000 then
 			zomb:update(dt,vector(self.player.body:getX(),self.player.body:getY()))
@@ -98,7 +99,6 @@ function debugLvl.draw(self)
 		map:draw()
 		self.player:draw()
 
-
 		--draw zombie
 			if #self.enemies ~= 0 then
 				for i, zomb in ipairs(self.enemies) do
@@ -107,6 +107,9 @@ function debugLvl.draw(self)
 					end
 				end
 			end
+
+
+			
 		--draw ground
 		love.graphics.setColor(50, 50, 50)
 		--love.graphics.polygon("line", self.ground.body:getWorldPoints(self.ground.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates

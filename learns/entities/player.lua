@@ -23,6 +23,7 @@ function Player:initialize(pos)
 
 	--attack
 	self.playerAttack = Attack()
+
 	-- quads, animation frames
 	-------------------------------------------------------------------
 	self.tileSizeX = 100
@@ -197,7 +198,9 @@ function Player:moveRight(dt,velx)
 end
 
 function Player:attack(dt)
-	self.playerAttack:initiateProjectile(self.col_x, self.col_y,
+	--self.playerAttack:initiateProjectile(self.col_x, self.col_y,
+	--									self.height, self.width, self.state)
+	self.playerAttack:initiateProjectile(self.body:getX(), self.body:getY(),
 										self.height, self.width, self.state)
 end
 
@@ -307,6 +310,9 @@ function Player:draw()
     love.graphics.setColor(255, 255, 255)
     love.graphics.circle("line", self.body:getX(), self.body:getY(), self.shape:getRadius())
     --love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints())) -- draw a "filled in" polygon using the ground's coordinates
+
+    --attacks
+	self.playerAttack:draw()
 end
 
 --update function(s)
